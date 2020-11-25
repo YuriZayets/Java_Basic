@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class Branching {
     public static void main(String[] args) {
+        System.out.println(taskThree(1,0,2,0,3,0));
+        System.out.println(2.3/1.1);
     }
 
     static void taskOne(double a, double b) {
@@ -22,12 +24,18 @@ public class Branching {
         return Math.max(Math.min(a, b), Math.min(c, d));
     }
 
-    static boolean taskThree(int x1, int y1, int x2, int y2, int x3, int y3) {
-        try {
-            return ((y3 - y1) / (y2 - y1)) == ((x3 - x1) / (x2 - x1));
+    static boolean taskThree(double x1, double y1, double x2, double y2, double x3, double y3) {
+        if ((areEqual(x1, x2) && areEqual(x2, x3)) ||(areEqual(y1, y2) && areEqual(y2, y3))){
+            return true;
+        } else try {
+            return areEqual ((y3 - y1*1.0) / (y2 - y1*1.0), ((x3 - x1*1.0) / (x2 - x1*1.0)))  ;
         } catch (ArithmeticException e) {
             return false;
         }
+    }
+
+    static boolean areEqual(double a, double b){ //made only for taskThree
+        return Math.abs(a-b) <= 1e-10;
     }
 
     static boolean taskFour(double A, double B, double x, double y, double z) {
