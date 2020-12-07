@@ -4,38 +4,39 @@ import java.util.Arrays;
 
 public class Decomposition_using_methods {
     public static void main(String[] args) {
-        int[] arr = new int[]{1,2,3,6,8,11,4,0};
+        int[] arr = new int[]{1, 2, 3, 6, 8, 11, 4, 0};
         //System.out.println(taskFive(arr));
         //System.out.println(taskSix(4,7,9));
         //taskOne(27,9);
         //System.out.println(taskSeven());
-        taskEight(arr,1,7);
+        //taskEight(arr, 1, 7);
+        taskEleven(254234, 2546867);
     }
 
-    static void taskOne(int a, int b){
-        int NOD = NOD(a,b);
-        int NOK = a*b/NOD;
+    static void taskOne(int a, int b) {
+        int NOD = NOD(a, b);
+        int NOK = a * b / NOD;
         System.out.println("Наибольший общий делитель равен : " + NOD + " Наименьшее общее кратное : " + NOK);
     }
 
-    static void taskTwo(){
+    static void taskTwo() {
 
     }
 
-    static double taskThree(double a){
-    double S = (Math.sqrt(3)/4)*a*a*1.0;
-    return S*6;
+    static double taskThree(double a) {
+        double S = (Math.sqrt(3) / 4) * a * a * 1.0;
+        return S * 6;
     }
 
-    static void taskFour(int...points){
+    static void taskFour(int... points) {
 
     }
 
-    static int taskFive(int[] array){
+    static int taskFive(int[] array) {
         int max = array[0];
         int almostMax = array[0];
-        for (int i: array) {
-            if (i > max){
+        for (int i : array) {
+            if (i > max) {
                 almostMax = max;
                 max = i;
             }
@@ -43,71 +44,85 @@ public class Decomposition_using_methods {
         return almostMax;
     }
 
-    static boolean taskSix(int a, int b, int c){
+    static boolean taskSix(int a, int b, int c) {
         return NOD(a, b) == 1 && NOD(b, c) == 1 && NOD(a, c) == 1;
     }
 
-    static int NOD(int n, int m){
-        if (m > n) return NOD(m,n);
-        if (m==0) return n;
-        return NOD(m,n%m);
+    static int NOD(int n, int m) {
+        if (m > n) return NOD(m, n);
+        if (m == 0) return n;
+        return NOD(m, n % m);
     }
 
-    static int taskSeven(){
-        int result=0;
+    static int taskSeven() {
+        int result = 0;
         int temp;
-    for(int i = 9; i >= 1; i -= 2){
-        temp = i;
-        for (int j = i-1; j >= 1; j--){
-            temp *= j;
+        for (int i = 9; i >= 1; i -= 2) {
+            temp = i;
+            for (int j = i - 1; j >= 1; j--) {
+                temp *= j;
             }
-        result += temp;
+            result += temp;
         }
-    return result;
+        return result;
     }
 
-    static void taskEight(int[] D, int k, int m){
-        int[] result = new int[m-k-1];
-        for (int j = 0; (k+2) <= m; j++){
-        result[j] = D[k] + D[k + 1] + D[k + 2];
-        k++;
+    static void taskEight(int[] D, int k, int m) {
+        int[] result = new int[m - k - 1];
+        for (int j = 0; (k + 2) <= m; j++) {
+            result[j] = D[k] + D[k + 1] + D[k + 2];
+            k++;
         }
         System.out.println(Arrays.toString(result));
     }
 
-    static void taskNine(){
+    static double taskNine(double X, double Y, double Z, double T) {
+        double diagonal = Math.sqrt(X * X + Y * Y);
+        double sFirstTriangle = X * Y * 0.5;
+        double halfPerimeter = (diagonal + Z + T) / 2;
+        double sSecondTriangle = Math.sqrt(halfPerimeter * (halfPerimeter - diagonal) * (halfPerimeter - Z) * (halfPerimeter - T));
+        return sFirstTriangle + sSecondTriangle;
+    }
+
+    static void taskTen(int N) {
+        int[] intsInN = new int[String.valueOf(Math.abs(N)).length()];
+        int count = 0;
+        for (int a = intsInN.length - 1; a >= 0; a--, count++) {
+            intsInN[count] = (int) (N / Math.pow(10, a));
+            N = N % (int) (Math.pow(10, a));
+        }
+        System.out.println(Arrays.toString(intsInN));
+    }
+
+    static void taskEleven(int a, int b) {
+        int aLength = String.valueOf(Math.abs(a)).length();
+        int bLength = String.valueOf(Math.abs(b)).length();
+        String answer = aLength > bLength ? "В числе a больше цифр" : "В числе b больше цифр";
+        if(aLength == bLength) answer = "Количество цифр одинаковое";
+        System.out.println(answer);
+    }
+
+    static void taskTwelve() {
 
     }
 
-    static void taskTen(){
+    static void taskThirteen() {
 
     }
 
-    static void taskEleven(){
+    static void taskFourteen() {
 
     }
 
-    static void taskTwelve(){
+    static void taskFifteen() {
 
     }
 
-    static void taskThirteen(){
+    static void taskSixteen() {
 
     }
 
-    static void taskFourteen(){
-
-    }
-
-    static void taskFifteen(){
-
-    }
-
-    static void taskSixteen(){
-
-    }
-
-    static void taskSeventeen(){
+    static void taskSeventeen() {
 
     }
 }
