@@ -1,6 +1,8 @@
 package Algorithmization;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Decomposition_using_methods {
     public static void main(String[] args) {
@@ -121,8 +123,22 @@ public class Decomposition_using_methods {
         System.out.println(answer);
     }
 
-    static void taskTwelve() {
+    static void taskTwelve(int K, int N) {
+        List<Integer> array = new ArrayList<>();
+        for (int i = 1; i < N; i++) {
+            if (K == sumOfNumbersInDigit(i)) {
+                array.add(i);
+            }
+        }
+        System.out.println(array.toString());
+    }
 
+    static int sumOfNumbersInDigit(long number) { //used in taskTwelve
+        int sum = 0;
+        for (; number > 0; number /= 10) {
+            sum += number % 10;
+        }
+        return sum;
     }
 
     static void taskThirteen(int n) {
@@ -155,9 +171,27 @@ public class Decomposition_using_methods {
         return true;
     }
 
-    static void taskFourteen() {
+    static void taskFourteen(int n) {
+        List<Integer> armstrongNumbers = new ArrayList<>();
+        for (int i = (int) Math.pow(10, n - 1); i < (int) Math.pow(10, n); i++) {
+            if (isArmstrong(i, n)) {
+                armstrongNumbers.add(i);
+            }
+        }
+        System.out.println(armstrongNumbers.toString());
+    }
 
-
+    static boolean isArmstrong(int number, int exponent) { //used in taskFourteen
+        int i = number;
+        boolean isArmstrong = false;
+        int temp = 0;
+        for (; number > 0; number /= 10) {
+            temp += Math.pow(number % 10, exponent);
+        }
+        if (temp == i) {
+            isArmstrong = true;
+        }
+        return isArmstrong;
     }
 
     static void taskFifteen(int n) {
@@ -199,13 +233,13 @@ public class Decomposition_using_methods {
     static void taskSeventeen(long n) {
         int count = 0;
         do {
-            n = numberSeparator(n);
+            n = digitInNumberSummator(n);
             count++;
         } while (n != 0);
         System.out.println(count);
     }
 
-    static int numberSeparator(long number) {
+    static int digitInNumberSummator(long number) { //used in taskSeventeen
         int sum = 0;
         for (; number > 10; number /= 10) {
             sum += number % 10;
