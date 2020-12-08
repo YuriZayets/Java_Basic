@@ -4,13 +4,6 @@ import java.util.Arrays;
 
 public class Decomposition_using_methods {
     public static void main(String[] args) {
-        int[] arr = new int[]{1, 2, 3, 6, 8, 11, 4, 0};
-        //System.out.println(taskFive(arr));
-        //System.out.println(taskSix(4,7,9));
-        //taskOne(27,9);
-        //System.out.println(taskSeven());
-        //taskEight(arr, 1, 7);
-        taskEleven(254234, 2546867);
     }
 
     static void taskOne(int a, int b) {
@@ -19,8 +12,21 @@ public class Decomposition_using_methods {
         System.out.println("Наибольший общий делитель равен : " + NOD + " Наименьшее общее кратное : " + NOK);
     }
 
-    static void taskTwo() {
-
+    static int taskTwo(int x, int y, int z, int t) {
+        int min = Math.min(x, Math.min(y, Math.min(z, t)));
+        int result = 1;
+        for (int i = 2; i <= min; i++) {
+            if (x % i == 0) {
+                if (y % i == 0) {
+                    if (z % i == 0) {
+                        if (t % i == 0) {
+                            result = i;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     static double taskThree(double a) {
@@ -28,8 +34,21 @@ public class Decomposition_using_methods {
         return S * 6;
     }
 
-    static void taskFour(int... points) {
-
+    static void taskFour(double... points) {
+        //предположил что точки приходят попарно в формате {x1,y1,x2,y2,x3,y3...}
+        double maxDistance = 0;
+        double tempDistance;
+        int point = 0;
+        for (int i = 0; i < points.length - 3; i += 2) {
+            tempDistance = Math.sqrt(Math.abs(Math.pow((points[i + 2] - points[i]), 2) + Math.pow((points[i + 3] - points[i + 1]), 2)));
+            if (tempDistance > maxDistance) {
+                maxDistance = tempDistance;
+                point = i;
+            }
+        }
+        System.out.printf("Между точками под номерами %d и %d с координатами %.2f и %.2f\n" +
+                "и точками под номерами %d и %d с координатами %.2f и %.2f\n" +
+                "рассточние наибольшее", point, (point + 1), points[point], points[point + 1], (point + 2), (point + 3), points[point + 2], points[point + 3]);
     }
 
     static int taskFive(int[] array) {
@@ -48,7 +67,7 @@ public class Decomposition_using_methods {
         return NOD(a, b) == 1 && NOD(b, c) == 1 && NOD(a, c) == 1;
     }
 
-    static int NOD(int n, int m) {
+    static int NOD(int n, int m) { //used in taskSix
         if (m > n) return NOD(m, n);
         if (m == 0) return n;
         return NOD(m, n % m);
@@ -98,7 +117,7 @@ public class Decomposition_using_methods {
         int aLength = String.valueOf(Math.abs(a)).length();
         int bLength = String.valueOf(Math.abs(b)).length();
         String answer = aLength > bLength ? "В числе a больше цифр" : "В числе b больше цифр";
-        if(aLength == bLength) answer = "Количество цифр одинаковое";
+        if (aLength == bLength) answer = "Количество цифр одинаковое";
         System.out.println(answer);
     }
 
@@ -106,23 +125,91 @@ public class Decomposition_using_methods {
 
     }
 
-    static void taskThirteen() {
+    static void taskThirteen(int n) {
+        for (int i = n; i <= 2 * n - 2; i++) {
+            if (!areComposite(i, i + 2)) {
+                System.out.println("Близнецы " + i + " : " + (i + 2));
+            }
+        }
+    }
 
+    static boolean areComposite(int a, int b) { //used in task Thirteen
+        boolean isAComposite = false;
+        boolean areComposite = false;
+        for (int i = 2; i < a; i++) {
+            //System.out.println("i " + i);
+            if (a % i == 0) {
+                isAComposite = true;
+                break;
+            }
+        }
+        if (!isAComposite) {
+            for (int i = 2; i < b; i++) {
+                if (b % i == 0) {
+                    areComposite = true;
+                    break;
+                }
+            }
+            return areComposite;
+        }
+        return true;
     }
 
     static void taskFourteen() {
 
-    }
-
-    static void taskFifteen() {
 
     }
 
-    static void taskSixteen() {
-
+    static void taskFifteen(int n) {
+        int count;
+        int result;
+        for (int i = 1; i <= 10 - n; i++) {
+            result = 0;
+            count = i;
+            for (int j = n - 1; j >= 0; j--) {
+                result += count * Math.pow(10, j);
+                count++;
+            }
+            amazingDecomposition(result);
+        }
     }
 
-    static void taskSeventeen() {
+    static void amazingDecomposition(int result) { //used in taskFifteen
+        System.out.println(result);
+    }
 
+    static void taskSixteen(int n) {
+        long result = (long) (((Math.pow(10, n) - Math.pow(10, n - 1)) / 4) * (Math.pow(10, n - 1) + Math.pow(10, n)));
+        System.out.println("Сумма нечетных элементов равна : " + result);
+        System.out.println("Количество чётных элементов в этом числе равно : " + evenInNumberCounter(result));
+    }
+
+    static int evenInNumberCounter(long number) { //used in taskSixteen
+        int count = 0;
+        long temp;
+        for (; number > 0; number /= 10) {
+            temp = number % 10;
+            if (temp % 2 == 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    static void taskSeventeen(long n) {
+        int count = 0;
+        do {
+            n = numberSeparator(n);
+            count++;
+        } while (n != 0);
+        System.out.println(count);
+    }
+
+    static int numberSeparator(long number) {
+        int sum = 0;
+        for (; number > 10; number /= 10) {
+            sum += number % 10;
+        }
+        return sum;
     }
 }
