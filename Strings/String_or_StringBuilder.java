@@ -35,9 +35,9 @@ public class String_or_StringBuilder {
     }
 
     static boolean taskThree(String word) {
-        //Удаляем всё лишнее -> сравниваем исходный с перевёрнутым исходным
-        return word.replaceAll("\\W", "")
-                .equalsIgnoreCase(new StringBuilder(word.replaceAll("\\W", ""))
+        String regex = "\\W";
+        return word.replaceAll(regex, "")
+                .equalsIgnoreCase(new StringBuilder(word.replaceAll(regex, ""))
                         .reverse().toString());
     }
 
@@ -67,7 +67,7 @@ public class String_or_StringBuilder {
         str = str.replaceAll("\\s", "");
         StringBuilder builder = new StringBuilder();
         for (char ch : str.toCharArray()) {
-            if (!builder.toString().contains(String.valueOf(ch))) {
+            if (builder.indexOf(String.valueOf(ch)) == -1) {
                 builder.append(ch);
             }
         }
@@ -84,15 +84,17 @@ public class String_or_StringBuilder {
                 indexOfMax = i;
             }
         }
-        System.out.println(words[indexOfMax]);
+        if (words.length > 0) {
+            System.out.println(words[indexOfMax]);
+        } else System.out.println("В строке нет слов");
     }
 
     static void taskNine(String str) {
         int lowerCase = 0;
         int upperCase = 0;
         for (char ch : str.toCharArray()) {
-            if (ch > 96 && ch < 123) lowerCase++;
-            if (ch > 64 && ch < 91) upperCase++;
+            if (ch >= 'a' && ch <= 'z') lowerCase++;
+            if (ch >= 'A' && ch <= 'Z') upperCase++;
         }
         System.out.println("Количество строчных (маленьких) : " + lowerCase + "\nКоличество прописных (больших) : " + upperCase);
     }
@@ -100,7 +102,7 @@ public class String_or_StringBuilder {
     static int taskTen(String str) {
         int sentences = 0;
         for (char ch : str.toCharArray()) {
-            if (ch == 63 || ch == 46 || ch == 33) {
+            if (ch == '?' || ch == '.' || ch == '!') {
                 sentences++;
             }
         }
