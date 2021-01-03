@@ -15,7 +15,7 @@ public class Linear_programs {
     static double taskThree(double x, double y) {
         double a = Math.toDegrees(x);
         double b = Math.toDegrees(y);
-        return ((Math.sin(a) + Math.cos(b)) / (Math.cos(a) - Math.cos(b))) * Math.tan(a * b);
+        return ((Math.sin(a) + Math.cos(b)) / (Math.cos(a) - Math.sin(b))) * Math.tan(a * b);
     }
 
     static double taskFour(double T) {
