@@ -1,5 +1,7 @@
 package Algorithmization;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,20 +17,10 @@ public class Decomposition_using_methods {
     }
 
     static int taskTwo(int x, int y, int z, int t) {
-        int min = Math.min(x, Math.min(y, Math.min(z, t)));
-        int result = 1;
-        for (int i = 2; i <= min; i++) {
-            if (x % i == 0) {
-                if (y % i == 0) {
-                    if (z % i == 0) {
-                        if (t % i == 0) {
-                            result = i;
-                        }
-                    }
-                }
-            }
-        }
-        return result;
+        int nod = NOD(x, y);
+        nod = NOD(z, nod);
+        nod = NOD(t, nod);
+        return nod;
     }
 
     static double taskThree(double a) {
@@ -55,11 +47,12 @@ public class Decomposition_using_methods {
 
     static int taskFive(int[] array) {
         int max = array[0];
-        int almostMax = array[0];
-        for (int i : array) {
-            if (i > max) {
-                almostMax = max;
-                max = i;
+        int almostMax = Integer.MIN_VALUE;
+        for (int j : array) {
+            if (j >= max) {
+                max = j;
+            } else if (j > almostMax) {
+                almostMax = j;
             }
         }
         return almostMax;
@@ -69,7 +62,7 @@ public class Decomposition_using_methods {
         return NOD(a, b) == 1 && NOD(b, c) == 1 && NOD(a, c) == 1;
     }
 
-    static int NOD(int n, int m) { //used in taskSix
+    static int NOD(int n, int m) { //used in taskSix, taskOne, taskTwo
         if (m > n) return NOD(m, n);
         if (m == 0) return n;
         return NOD(m, n % m);
@@ -125,7 +118,7 @@ public class Decomposition_using_methods {
 
     static void taskTwelve(int K, int N) {
         List<Integer> array = new ArrayList<>();
-        for (int i = 1; i < N; i++) {
+        for (int i = 1; i <= N; i++) {
             if (K == sumOfNumbersInDigit(i)) {
                 array.add(i);
             }
@@ -143,42 +136,38 @@ public class Decomposition_using_methods {
 
     static void taskThirteen(int n) {
         for (int i = n; i <= 2 * n - 2; i++) {
-            if (!areComposite(i, i + 2)) {
+            if (notComposite(i) && notComposite(i + 2)) {
                 System.out.println("Близнецы " + i + " : " + (i + 2));
             }
         }
     }
 
-    static boolean areComposite(int a, int b) { //used in task Thirteen
-        boolean isAComposite = false;
-        boolean areComposite = false;
+    static boolean notComposite(int a) { //used in task Thirteen
         for (int i = 2; i < a; i++) {
-            //System.out.println("i " + i);
             if (a % i == 0) {
-                isAComposite = true;
-                break;
+                return false;
             }
-        }
-        if (!isAComposite) {
-            for (int i = 2; i < b; i++) {
-                if (b % i == 0) {
-                    areComposite = true;
-                    break;
-                }
-            }
-            return areComposite;
         }
         return true;
     }
 
     static void taskFourteen(int n) {
         List<Integer> armstrongNumbers = new ArrayList<>();
-        for (int i = (int) Math.pow(10, n - 1); i < (int) Math.pow(10, n); i++) {
-            if (isArmstrong(i, n)) {
+        for (int i = 1; i < (int) Math.pow(10, n); i++) {
+            if (isArmstrong(i, getIntLength(i))) {
                 armstrongNumbers.add(i);
             }
         }
         System.out.println(armstrongNumbers.toString());
+    }
+
+    static int getIntLength(int i) { //used in taskFourteen
+        int count = (i == 0) ? 1 : 0;
+        while (i != 0) {
+            count++;
+            i /= 10;
+        }
+        return count;
     }
 
     static boolean isArmstrong(int number, int exponent) { //used in taskFourteen
@@ -195,27 +184,47 @@ public class Decomposition_using_methods {
     }
 
     static void taskFifteen(int n) {
-        int count;
-        int result;
-        for (int i = 1; i <= 10 - n; i++) {
-            result = 0;
-            count = i;
-            for (int j = n - 1; j >= 0; j--) {
-                result += count * Math.pow(10, j);
-                count++;
+        for (int i = (int) Math.pow(10, n - 1); i < (int) Math.pow(10, n); i++) {
+            if (isIncreasingSequence(i)) {
+                System.out.println(i);
             }
-            amazingDecomposition(result);
         }
     }
 
-    static void amazingDecomposition(int result) { //used in taskFifteen
-        System.out.println(result);
+    static boolean isIncreasingSequence(int result) { //used in taskFifteen
+        int digit = result % 10;
+        result /= 10;
+        while (result != 0) {
+            if (digit <= result % 10) {
+                return false;
+            }
+            digit = result % 10;
+            result /= 10;
+        }
+        return true;
     }
 
     static void taskSixteen(int n) {
-        long result = (long) (((Math.pow(10, n) - Math.pow(10, n - 1)) / 4) * (Math.pow(10, n - 1) + Math.pow(10, n)));
+        int result = 0;
+        for (int i = (int) Math.pow(10, n - 1); i < (int) Math.pow(10, n); i++) {
+            if (areAllDigitsOdd(i)) {
+                result++;
+            }
+        }
         System.out.println("Сумма нечетных элементов равна : " + result);
         System.out.println("Количество чётных элементов в этом числе равно : " + evenInNumberCounter(result));
+    }
+
+    static boolean areAllDigitsOdd(int i) { //used in taskSixteen
+        int digit = i % 10;
+        while (i != 0) {
+            i /= 10;
+            if (digit % 2 == 0) {
+                return false;
+            }
+            digit = i % 10;
+        }
+        return true;
     }
 
     static int evenInNumberCounter(long number) { //used in taskSixteen
@@ -233,7 +242,7 @@ public class Decomposition_using_methods {
     static void taskSeventeen(long n) {
         int count = 0;
         do {
-            n = digitInNumberSummator(n);
+            n -= digitInNumberSummator(n);
             count++;
         } while (n != 0);
         System.out.println(count);
@@ -241,7 +250,7 @@ public class Decomposition_using_methods {
 
     static int digitInNumberSummator(long number) { //used in taskSeventeen
         int sum = 0;
-        for (; number > 10; number /= 10) {
+        for (; number > 0; number /= 10) {
             sum += number % 10;
         }
         return sum;
