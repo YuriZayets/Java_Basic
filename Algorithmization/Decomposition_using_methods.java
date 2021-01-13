@@ -151,9 +151,9 @@ public class Decomposition_using_methods {
         return true;
     }
 
-    static void taskFourteen(int n) {
+    static void taskFourteen(int k) {
         List<Integer> armstrongNumbers = new ArrayList<>();
-        for (int i = 1; i < (int) Math.pow(10, n); i++) {
+        for (int i = 1; i <= k; i++) {
             if (isArmstrong(i, getIntLength(i))) {
                 armstrongNumbers.add(i);
             }
@@ -208,10 +208,10 @@ public class Decomposition_using_methods {
         int result = 0;
         for (int i = (int) Math.pow(10, n - 1); i < (int) Math.pow(10, n); i++) {
             if (areAllDigitsOdd(i)) {
-                result++;
+                result+=i;
             }
         }
-        System.out.println("Сумма нечетных элементов равна : " + result);
+        System.out.println("Сумма элементов содержащих только нечётные числа равна : " + result);
         System.out.println("Количество чётных элементов в этом числе равно : " + evenInNumberCounter(result));
     }
 
